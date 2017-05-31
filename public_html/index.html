@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/home.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/page.js"></script>
+  <script type="text/javascript" src="js/jquery.rowster.js"></script>
+  <script type="text/javascript" src="js/jquery.tabletoCSV.js"></script>
+  <script type="text/javascript" src="js/calc_zero.js"></script>
+  <script type="text/javascript" src="js/jquery.table_to_csv.js"></script>
+  <script type="text/javascript" src="js/add_row_to_table.js"></script>
+   <style>
+	table.sorting-table {cursor: move;}
+	table tr.nodrag td.sorter {cursor: default; background-color: #ddd;}
+	.sort-handler {float: right; background-color: #f80; width: 14px; height: 14px; margin: 2px 0 0 6px; cursor: move;}
+ </style>
+</head>
+<body>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img alt="Brand" class="logo" src="images/logo2.png"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="padding-top:10px;">
+          
+         
+        </div>
+      </div>
+    </nav>
+    
+
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard" aria-hidden="true">&nbsp;</span>Tableau de bord</a></li>
+        </ul>
+        
+          </div>
+          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <ol class="breadcrumb">
+        <li><a href="index.html">Accueil</a></li>
+        <li class="active">Chargement</li>
+      </ol>
+      <div class="col-sm-12 col-md-12 content">
+        <div class="page-header">
+          <h2>Charger Fichier CSV </h2>
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Fichier CSV</h3>
+            </div>
+            <div class="panel-body">
+             
+         
+                        <div class="row">
+                          <div class="col-md-4 col-md-offset-1 col-sm-6 col-sm-offset-3">
+
+                              <br>
+
+                          </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                              <div class="input-group input-file">
+                                <span class="input-group-btn">
+
+                                      <label class="btn btn-primary" for="filecsv" >
+
+                                          <input id="filecsv" type="file" style="display:none;" onchange="$('#upload-file-info').val($(this).val().split('\\').pop());">
+                                          Choisir un Fichier
+
+                                      </label> 
+                                  </span>
+                                  <input  type="text" id="upload-file-info" class="form-control" placeholder='Choisissez un fichier...' />
+
+                            </div>
+
+                            <br>
+
+                      <div class="form-group">
+                          <div id="dataTable">
+                             
+                              <span id="spanid" style="color:blueviolet;font-weight: bold;"></span>
+                               <hr>
+                          </div>
+                       
+                          <br>
+                          
+                        <button id="effacer" type="reset" class="btn btn-danger">Effacer</button>
+                        <button id="export" data-export="export" class="btn btn-primary">Exporter</button>
+                      </div>
+                             
+  
+                    </div>
+      
+          </div>
+
+
+          </div>
+          
+
+        </div>
+        
+      </div>
+                
+
+          </div>
+        </div>
+    </div>
+ 
+   <script type="text/javascript">
+            //check if browser supports file api and filereader features
+           
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+              //watch for change on the 
+              
+                $("#filecsv" ).change(function() {
+                   
+                     d3.text(this.files[0].name, function(data) {
+                            var parsedCSV = d3.csv.parseRows(data);
+                           
+                            var numberOfzero = numberOfone(parsedCSV[0].length, parsedCSV.length,parsedCSV);
+                            
+
+                            var container = d3.select("#dataTable")
+                                        .append("table")
+                                            .attr("class","table table-striped")
+                                            .attr("id","sample_table")
+                                            .attr("style","cursor:move")
+                                         .append("tbody")
+           
+                                            .selectAll("tr")
+                                                  .data(parsedCSV).enter()
+                                                   .append("tr")
+                                                   .on("mouseover", function(){d3.select(this).style("background-color", "cyan");})
+                                                    .on("mouseout", function(){d3.select(this).style("background-color", "white")})
+
+                                             .selectAll("td")
+                                                    .data(function(d) { return d; }).enter()
+                                                    .append("td")
+                                                    .text(function(d) { return d; })
+                                                    ;
+                                      
+                                      var html =addRow(numberOfzero);
+                                      $(html).appendTo('#sample_table');
+                                      
+                                       
+                                        $("#sample_table").rowSorter({
+                                             
+                                             onDrop: function(tbody, row, index, oldIndex) { 
+                                                    var parsedCSV2 = d3.csv.parseRows($("#sample_table").table_tocsv())
+                                                    var numberOfzero2 = numberOfone(parsedCSV2[0].length, parsedCSV2.length,parsedCSV2);
+                                                    
+                                                     $("#nbzero").remove();
+                                                     var html =addRow(numberOfzero2);
+                                                     $(html).appendTo('#sample_table');
+                                                   
+                                                    $('#spanid').html("La ligne "+ (oldIndex + 1)+" est passée à la ligne " + (index + 1));
+                                            }
+                                           
+        
+                                 });
+                                 
+ 
+                        });
+ 
+
+                });
+                
+            } else {
+              alert('The File APIs are not fully supported in this browser.');
+            }
+  </script>
+
+ 
+  <script>
+      
+    $(document).ready(function(){
+          $("#effacer").click(function(){
+              $("#sample_table").empty();
+                location.reload();
+      });
+    });
+  </script>
+  
+  <script>
+      
+       $("#export").click(function(){
+                $("#nbzero").remove();
+                $("#sample_table").tableToCSV();
+            });
+        
+  </script>
+  
+  
+</body>
+</html>
+

@@ -1,0 +1,138 @@
+body,html{
+   min-height: 100%;
+  }
+
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+body{
+	background-color: #EEEEEE; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#EEEEEE, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#EEEEEE, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#EEEEEE, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#EEEEEE, white); /* Standard syntax */
+    padding-top: 70px;
+}
+
+.custom{
+  
+  margin-left:-500px !important;
+}
+.navbar{
+	min-height: 68px;
+}
+.navbar-default {
+    background-color: #F3F3F3; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#FFFFFF, #F3F3F3); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#FFFFFF, #F3F3F3); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#FFFFFF, #F3F3F3); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#FFFFFF, #F3F3F3); /* Standard syntax */
+}
+.logo{
+	height: 40px;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #eb7505;
+}
+
+
+/*
+ * Main content
+ */
+.content{
+	background-color: white;
+	padding-left: 20px;
+}
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+a{
+	color: #eb7505;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px;}
+.toggle.ios .toggle-handle { border-radius: 20px; }
